@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="phid_button_text">#FFFFFFFF</color>
+	<color name="phid_edit_text">#FFFFFFFF</color>
+	<color name="phid_hint_text">#FF007066</color>
+	<color name="phid_cyan_bg">#ff009688</color>
+	<color name="phid_cyan_label_text">#ff007066</color>
+	<color name="phid_white_label_text">#ffffffff</color>
+	<color name="phid_progress_bar">#ff017167</color>
+	<color name="phid_dark_text">#ff004c45</color>
+</resources>

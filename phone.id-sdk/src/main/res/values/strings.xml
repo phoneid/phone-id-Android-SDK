@@ -1,0 +1,27 @@
+<resources>
+    <string name="phid_app_name">Phone.Id</string>
+
+    <string name="phid_label_search">Search</string>
+    <string name="phid_label_code">Code</string>
+    <string name="phid_label_phonenumber">Phone Number</string>
+    <string name="phid_error">Error</string>
+    <string name="phid_LOGGED_IN">PHONEID LOGGED IN</string>
+    <string name="phid_NOT_LOGGED_IN">LOGIN WITH PHONEID</string>
+    <string name="phid_error_no_connection">You need to be connected to internet to login with your phone number</string>
+    <string name="phid_label_access_app_with_phone" formatted="false">Access &lt;b>%s&lt;/b> with your phone number:</string>
+    <string name="phid_label_we_dont_spam">We don\'t SPAM.</string>
+    <string name="phid_label_terms_and_policy">
+        <![CDATA[By continuing you agree with:<br/><a href="http://www.google.com">Terms &amp; Conditions</a> and <a href="http://www.google.com">Privacy Policy</a>]]></string>
+	<string name="phid_label_type_code_from_sms">Type the confirmation code you\'ll soon receive by message</string>
+	<string name="phid_error_havent_received_code_in_time">If you haven\'t received any message yet, go back and check the number you typed or we can call to read you the confirmation code.</string>
+	<string name="phid_btn_call_me_back"><![CDATA[<u>Please call me now</u>]]></string>
+	<string name="phid_msg_logging_in">Logging in...</string>
+	<string name="phid_error_invalid_code">The code you typed is different from one we\'ve sent you.&lt;br/>&lt;br/>
+		Correct the code, or press back and check your phone number.</string>
+	<string name="phid_msg_logged_in">Logged in with phone.id</string>
+    <string name="phid_sync_contacts">Sync contacts</string>
+    <string name="phid_sync_contacts_summary">Sync contacts with server</string>
+	<string name="phid_contacts_last_sync">Last synced</string>
+	<string name="phid_contacts_last_sync_unknown">unknown</string>
+    <string name="phid_error_invalid_code_short">Wrong code</string>
+</resources>

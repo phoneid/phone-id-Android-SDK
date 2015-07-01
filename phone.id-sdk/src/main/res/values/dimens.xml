@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="phid_default_margin">7dp</dimen>
+	<dimen name="phid_padding_small">5dp</dimen>
+	<dimen name="phid_big_margin">15dp</dimen>
+</resources>

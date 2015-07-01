@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/layoutControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+		android:background="@color/phid_cyan_bg"
+		android:paddingBottom="@dimen/phid_big_margin">
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"
+            android:text="@string/phid_label_access_app_with_phone"
+            android:gravity="center_horizontal"
+            android:minHeight="50dp"
+            android:layout_margin="@dimen/phid_big_margin"
+			style="@style/phid_Label.Medium.White"/>
+
+        <RelativeLayout
+            android:id="@+id/layoutNumber"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/header">
+
+            <!-- TODO: texts and dimens move to resources -->
+
+            <Button
+                android:id="@+id/country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/phid_icon_arrow_down"
+                android:paddingRight="@dimen/phid_padding_small"
+                style="@style/phid_Button.Left"/>
+
+            <EditText
+                android:id="@+id/number"
+                android:hint="@string/phid_label_phonenumber"
+                android:inputType="numberDecimal"
+                android:digits="0123456789"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/country"
+                android:layout_width="wrap_content"
+                android:layout_alignTop="@+id/country"
+                android:layout_alignBottom="@+id/country"
+                android:minEms="7"
+                android:maxLength="16"
+                android:imeOptions="actionGo"
+                android:layout_height="wrap_content"
+				style="@style/phid_EditText.Base"
+				/>
+
+            <Button
+                android:text="@android:string/ok"
+                android:id="@+id/ok"
+                android:layout_toRightOf="@id/number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/phid_Button.Right"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/weDontSpam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/phid_label_we_dont_spam"
+        android:layout_below="@+id/layoutControls"
+        android:layout_marginTop="@dimen/phid_big_margin"
+        style="@style/phid_Label.Medium.Cyan"/>
+
+    <TextView
+        android:id="@+id/termsAndConditions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/phid_label_terms_and_policy"
+        android:layout_below="@+id/weDontSpam"
+        android:gravity="center_horizontal"
+        android:layout_margin="@dimen/phid_big_margin"
+        style="@style/phid_Label.Small.Cyan"/>
+
+
+</RelativeLayout>

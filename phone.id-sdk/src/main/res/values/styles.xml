@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="phid_EditText.Base" parent="android:Widget.EditText">
+		<item name="android:background">@drawable/phid_edit_text_bg</item>
+		<item name="android:textColor">@color/phid_edit_text</item>
+		<item name="android:textColorHint">@color/phid_hint_text</item>
+	</style>
+	<style name="phid_Label.Medium" parent="android:Widget.TextView">
+		<item name="android:textColor">@color/phid_white_label_text</item>
+		<item name="android:textAppearance">?android:textAppearanceMedium</item>
+	</style>
+	<style name="phid_Label.Small" parent="android:Widget.TextView">
+		<item name="android:textAppearance">?android:textAppearanceSmall</item>
+	</style>
+	<style name="phid_Label.Medium.White" parent="phid_Label.Medium">
+		<item name="android:textColor">@color/phid_white_label_text</item>
+	</style>
+	<style name="phid_Label.Medium.Cyan" parent="phid_Label.Medium">
+		<item name="android:textColor">@color/phid_cyan_label_text</item>
+	</style>
+	<style name="phid_Label.Small.White" parent="phid_Label.Small">
+		<item name="android:textColor">@color/phid_white_label_text</item>
+	</style>
+	<style name="phid_Label.Small.Cyan" parent="phid_Label.Small">
+		<item name="android:textColor">@color/phid_cyan_label_text</item>
+	</style>
+	<style name="phid_Button.Left" parent="android:Widget.Button">
+		<item name="android:background">@drawable/phid_btn_left_bg</item>
+		<item name="android:textColor">@color/phid_button_text</item>
+	</style>
+	<style name="phid_Button.Right" parent="android:Widget.Button">
+		<item name="android:background">@drawable/phid_btn_right_bg</item>
+		<item name="android:textColor">@color/phid_button_text</item>
+	</style>
+</resources>
