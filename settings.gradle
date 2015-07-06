@@ -1,1 +1,1 @@
-include ':demo', ':phone.id-sdk'
+include ':demo'

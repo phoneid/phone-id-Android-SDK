@@ -6,13 +6,13 @@
 To include Phone.Id SDK into your project add the following dependency to your build.gradle file:
 
 	repositories {
-		jcenter()
+		maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 		mavenCentral()
 	}
 
 	dependencies {
 		...
-		compile 'id.phone.sdk:phone.id-sdk:1.0.0-SNAPSHOT'
+    	compile 'com.github.fedepo:library:0.9.16-SNAPSHOT'
 		...
 	}
 
