@@ -12,7 +12,7 @@ To include Phone.Id SDK into your project add the following dependency to your b
 
 	dependencies {
 		...
-    	compile 'com.github.fedepo:library:0.9.16-SNAPSHOT'
+    	compile 'com.github.fedepo:library:0.9.17-SNAPSHOT'
 		...
 	}
 
@@ -49,11 +49,10 @@ LoginButton is customized Button class which may be placed anywhere on your acti
 handle Phone.Id authorization process. This button indicates login status and handles click events
 to login/log-out from Phone.Id server. To use LoginButton add it tou your layout xml file:
 
-	<id.phone.sdk.ui.view.LoginButton
+    <id.phone.sdk.ui.view.LoginButton
         android:id="@+id/btnPhoneIdLoginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minEms="10"
         />
 
 ### Catching Phone.Id updates
@@ -277,3 +276,31 @@ You can use it in the following way for example:
 
 	((TextView)view.findViewById(R.id.textView_UserName)).setText(PhoneId.getUserDisplayName(
 		getActivity(), phoneNumber, true);
+
+## UI Customizing
+
+Phone.Id library UI is fully customizable. You can change appearance for both LoginButton and for
+Phone.Id UI.
+
+### LoginButton customization
+
+LoginButton has built-in defaults which may be overridden by your code. For example:
+
+    <id.phone.sdk.ui.view.LoginButton
+        android:id="@+id/btnPhoneIdLoginButtonStyled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minEms="17"
+        android:layout_centerHorizontal="true"
+        android:text ="Logout (styled)"
+        app:textLoggedOut="Login Phone.Id (styled)"
+        android:background="@drawable/login_btn_styled_bg"
+        android:textColor="@android:color/white"
+		android:gravity="center_vertical|left"
+		android:drawablePadding="10dp"
+        />
+
+### Phone.Id UI customization
+
+You can override any or all UI resources provided by Phobe.id-sdk library. All Phone.id-sdk resource
+names are started from "phid_" prefix.
