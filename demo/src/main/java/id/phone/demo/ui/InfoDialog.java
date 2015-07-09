@@ -12,6 +12,8 @@ import android.util.Log;
 
 import id.phone.demo.R;
 
+import static id.phone.sdk.utils.LogUtils.LOGD;
+
 public class InfoDialog extends DialogFragment
 {
     public static final String TAG = InfoDialog.class.getSimpleName();
@@ -91,7 +93,7 @@ public class InfoDialog extends DialogFragment
 		}
 		catch (Exception ex)
 		{
-			Log.d(TAG, "show", ex);
+			LOGD(TAG, "show", ex);
 		}
     }
 

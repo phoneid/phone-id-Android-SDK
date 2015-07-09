@@ -29,13 +29,12 @@ import id.phone.demo.ui.InfoDialog;
 import id.phone.sdk.PhoneId;
 import id.phone.sdk.rest.response.TokenResponse;
 import id.phone.sdk.rest.response.UserResponse;
+import id.phone.sdk.ui.view.LoginButton;
 
 
 public class MainActivity extends FragmentActivity
 {
 	public static final String TAG = MainActivity.class.getSimpleName();
-
-	public static final int ACCOUNT_CHOOSER_ACTIVITY = 109;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +46,17 @@ public class MainActivity extends FragmentActivity
         }
     }
 
-    /*@Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         //ok we've got some data from the PhoneId SDK
         if (resultCode == RESULT_OK && requestCode == LoginButton.LOGIN_REQUEST_CODE && data != null) {
-            ((PlaceholderFragment) getSupportFragmentManager().findFragmentById(R.id.container)).showUserInfo(data.getStringExtra(Intent.EXTRA_TEXT));
+            ((PlaceholderFragment)
+				getSupportFragmentManager().findFragmentById(R.id.container))
+				.showUserInfo(data.getStringExtra(Intent.EXTRA_TEXT));
         }
-    }*/
+    }
 
     /**
      * A placeholder fragment containing a simple view.
@@ -67,11 +68,6 @@ public class MainActivity extends FragmentActivity
 		Button btnShowAccessToken;
 		Button btnShowUserInfo;
 		Button btnUploadContacts;
-
-		AccountManager mAccountManager;
-		String mAccessToken;
-		Account[] mAccounts;
-		Account mAccount;
 
         public PlaceholderFragment() {
         }
@@ -142,31 +138,54 @@ public class MainActivity extends FragmentActivity
 				@Override
 				public void onClick(View v)
 				{
-					PhoneId.getInstance().getAccessToken(getActivity(), new PhoneId.TokenResponseCallback() {
-						@Override
-						public void tokenResponseDelivered(TokenResponse tokenResponse)
-						{
-							InfoDialog.newInstance(R.string.msg_access_token, tokenResponse.toString())
-								.show(getActivity().getSupportFragmentManager(), InfoDialog.TAG);
-						}
-					});
+					try
+					{
+						PhoneId.getInstance().getAccessToken(getActivity(), new PhoneId.TokenResponseCallback() {
+							@Override
+							public void tokenResponseDelivered(TokenResponse tokenResponse)
+							{
+								InfoDialog.newInstance(R.string.msg_access_token, tokenResponse.toString())
+									.show(getActivity().getSupportFragmentManager(), InfoDialog.TAG);
+							}
+						});
+					}
+					catch (Exception ex)
+					{
+						InfoDialog.newInstance(R.string.phid_error, ex.getLocalizedMessage())
+							.show(getActivity().getSupportFragmentManager(), InfoDialog.TAG);
+					}
 				}
 			});
 
-			PhoneId phoneId = PhoneId.getInstance();
-			layoutButtons.setVisibility(phoneId != null && phoneId.isLoggedIn() ? View.VISIBLE : View.GONE);
+			try
+			{
+				layoutButtons
+					.setVisibility(PhoneId.getInstance().isLoggedIn() ? View.VISIBLE : View.GONE);
+			}
+			catch (Exception ex)
+			{
+				InfoDialog.newInstance(R.string.phid_error, ex.getLocalizedMessage())
+					.show(getActivity().getSupportFragmentManager(), InfoDialog.TAG);
+			}
 
 			btnShowAccessToken.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
 				{
-					PhoneId phoneId = PhoneId.getInstance();
-					TokenResponse response;
-					if (phoneId != null && getActivity() != null &&
-						(response = phoneId.getAccessToken(getActivity(), null)) != null)
+					try
 					{
-						InfoDialog.newInstance(R.string.msg_access_token, response.toString())
+						TokenResponse response;
+						if (getActivity() != null &&
+							(response = PhoneId.getInstance().getAccessToken(getActivity(), null)) != null)
+						{
+							InfoDialog.newInstance(R.string.msg_access_token, response.toString())
+								.show(getActivity().getSupportFragmentManager(), InfoDialog.TAG);
+						}
+					}
+					catch (Exception ex)
+					{
+						InfoDialog.newInstance(R.string.phid_error, ex.getLocalizedMessage())
 							.show(getActivity().getSupportFragmentManager(), InfoDialog.TAG);
 					}
 				}
@@ -176,12 +195,19 @@ public class MainActivity extends FragmentActivity
 				@Override
 				public void onClick(View v)
 				{
-					PhoneId phoneId = PhoneId.getInstance();
-					UserResponse response;
-					if (phoneId != null && getActivity() != null &&
-						(response = phoneId.getUser()) != null)
+					try
 					{
-						InfoDialog.newInstance(R.string.msg_user_info, response.toString())
+						UserResponse response;
+						if (getActivity() != null &&
+							(response = PhoneId.getInstance().getUser()) != null)
+						{
+							InfoDialog.newInstance(R.string.msg_user_info, response.toString())
+								.show(getActivity().getSupportFragmentManager(), InfoDialog.TAG);
+						}
+					}
+					catch (Exception ex)
+					{
+						InfoDialog.newInstance(R.string.phid_error, ex.getLocalizedMessage())
 							.show(getActivity().getSupportFragmentManager(), InfoDialog.TAG);
 					}
 				}
@@ -191,12 +217,19 @@ public class MainActivity extends FragmentActivity
 				@Override
 				public void onClick(View v)
 				{
-					PhoneId phoneId = PhoneId.getInstance();
-					if (phoneId != null && getActivity() != null)
+					try
 					{
-						phoneId.uploadContactsToServer();
-						btnUploadContacts.setText(R.string.btn_uploading_contacts);
-						btnUploadContacts.setEnabled(false);
+						if (getActivity() != null)
+						{
+							PhoneId.getInstance().uploadContactsToServer();
+							btnUploadContacts.setText(R.string.btn_uploading_contacts);
+							btnUploadContacts.setEnabled(false);
+						}
+					}
+					catch (Exception ex)
+					{
+						InfoDialog.newInstance(R.string.phid_error, ex.getLocalizedMessage())
+							.show(getActivity().getSupportFragmentManager(), InfoDialog.TAG);
 					}
 				}
 			});
@@ -209,15 +242,6 @@ public class MainActivity extends FragmentActivity
 		{
 			if( resultCode == RESULT_CANCELED)
 				return;
-			if( requestCode == ACCOUNT_CHOOSER_ACTIVITY )
-			{
-				Bundle bundle = data.getExtras();
-				mAccount = new Account(
-					bundle.getString(AccountManager.KEY_ACCOUNT_NAME),
-					bundle.getString(AccountManager.KEY_ACCOUNT_TYPE)
-				);
-				Log.d(TAG, "Selected account " + mAccount.name + ", fetching");
-			}
 		}
 
         public void showUserInfo(String userInfo)
