@@ -12,7 +12,7 @@ To include Phone.Id SDK into your project add the following dependency to your b
 
 	dependencies {
 		...
-    	compile 'com.github.fedepo:library:0.9.17-SNAPSHOT'
+    	compile 'id.phone:library:0.9.19-SNAPSHOT'
 		...
 	}
 
