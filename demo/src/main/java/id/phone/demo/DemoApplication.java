@@ -17,7 +17,7 @@ public class DemoApplication extends Application {
         super.onCreate();
 
         //init of our sdk
-        sPhoneId = PhoneId.getInstance(this, "TestPhoneId");
+        sPhoneId = PhoneId.getInstance(this, "1551b7bc1926709dd7a66742be6def4ee64d7be4"); // Phone.Id Demo App Android
     }
 
     @Override
