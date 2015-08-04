@@ -302,5 +302,45 @@ LoginButton has built-in defaults which may be overridden by your code. For exam
 
 ### Phone.Id UI customization
 
-You can override any or all UI resources provided by Phobe.id-sdk library. All Phone.id-sdk resource
+You can override any or all UI resources provided by Phone.id-sdk library. All Phone.id-sdk resource
 names are started from "phid_" prefix.
+
+## Social functions
+### User object
+
+id.phone.sdk.social.User object provides handful information about one of your contacts. You can create
+ instance of id.phone.sdk.social.User object from E164 formatted phone number.
+
+	  public static User getInstance(String phoneNumber) throws UserNotFoundException
+
+User will be looked up in local contacts database. If nothing found, then UserNotFoundException thrown.
+You can get user information from server API using
+
+	public static void getRemoteInstance(@NonNull String phoneNumber
+		, @NonNull UserInstanceCreatedCallback callback)
+
+UserInstanceCreatedCallback callback will return a User instance or an error.
+
+#### QuickContactBadge for your UI
+
+id.phone.sdk.social.User class instance may create and setup the QuickContactBadge view object for
+ the selected user. Below is sample code:
+
+	private void createSampleQuickContactBadge(String userPhoneNumber)
+	{
+		try
+		{
+			User user = User.getInstance(userPhoneNumber);
+			layoutContacts.removeAllViews();
+			QuickContactBadge badge = user.createQuickContactBadge(getActivity());
+			layoutContacts.addView(badge,
+				new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+					ViewGroup.LayoutParams.WRAP_CONTENT));
+		}
+		catch (UserNotFoundException ex)
+		{
+			InfoDialog.newInstance(R.string.msg_user_info, "No user found with phone: " + userPhoneNumber)
+				.show(getActivity().getSupportFragmentManager(), InfoDialog.TAG);
+		}
+	}
+

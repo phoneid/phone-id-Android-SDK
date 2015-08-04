@@ -1,32 +1,26 @@
 package id.phone.demo;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
-import android.accounts.AuthenticatorException;
-import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.QuickContactBadge;
 import android.widget.TextView;
-
-import java.io.IOException;
 
 import id.phone.demo.ui.InfoDialog;
 import id.phone.sdk.PhoneId;
+import id.phone.sdk.social.User;
+import id.phone.sdk.social.UserNotFoundException;
 import id.phone.sdk.rest.response.TokenResponse;
 import id.phone.sdk.rest.response.UserResponse;
 import id.phone.sdk.ui.view.LoginButton;
@@ -68,6 +62,7 @@ public class MainActivity extends FragmentActivity
 		Button btnShowAccessToken;
 		Button btnShowUserInfo;
 		Button btnUploadContacts;
+		ViewGroup layoutContacts;
 
         public PlaceholderFragment() {
         }
@@ -133,6 +128,7 @@ public class MainActivity extends FragmentActivity
 			btnShowAccessToken = (Button)rootView.findViewById(R.id.btnShowAccessToken);
 			btnShowUserInfo = (Button)rootView.findViewById(R.id.btnShowUserInfo);
 			btnUploadContacts = (Button)rootView.findViewById(R.id.btnUploadContacts);
+			layoutContacts = (ViewGroup)rootView.findViewById(R.id.layoutContacts);
 
 			btnLoginAccountManager.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -249,6 +245,24 @@ public class MainActivity extends FragmentActivity
             ((TextView) getView().findViewById(R.id.txtUserInfo)).setText(userInfo);
         }
 
+		private void createSampleQuickContactBadge()
+		{
+			final String userPhoneNumber = "+1800555333";
+			try
+			{
+				User user1 = User.getInstance(userPhoneNumber);
+				layoutContacts.removeAllViews();
+				QuickContactBadge badge = user1.createQuickContactBadge(getActivity());
+				layoutContacts.addView(badge,
+					new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+						ViewGroup.LayoutParams.WRAP_CONTENT));
+			}
+			catch (UserNotFoundException ex)
+			{
+				InfoDialog.newInstance(R.string.msg_user_info, "No user found with phone: " + userPhoneNumber)
+					.show(getActivity().getSupportFragmentManager(), InfoDialog.TAG);
+			}
+		}
 
         private class PhoneIdEventListener
         {
