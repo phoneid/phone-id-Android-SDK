@@ -93,6 +93,10 @@ public class MainActivity extends FragmentActivity
 							, intent.getStringExtra(PhoneId.ARG_ERROR_CODE)
 							, intent.getStringExtra(PhoneId.ARG_ERROR_MESSAGE)
 						);
+					else if (PhoneId.ACTION_STATUS.equals(intent.getAction()))
+						phoneIdEventListener.onStatus(
+							intent.getStringExtra(PhoneId.ARG_MESSAGE)
+						);
 				}
 			}
 		};
@@ -107,6 +111,7 @@ public class MainActivity extends FragmentActivity
 			intentFilter.addAction(PhoneId.ACTION_LOGGED_OUT);
 			intentFilter.addAction(PhoneId.ACTION_USER_PROFILE);
 			intentFilter.addAction(PhoneId.ACTION_CONTACTS_UPLOADED);
+			intentFilter.addAction(PhoneId.ACTION_STATUS);
 			intentFilter.addAction(PhoneId.ACTION_ERROR);
 			LocalBroadcastManager.getInstance(activity).registerReceiver(phoneIdEventsReceiver, intentFilter);
 		}
@@ -350,6 +355,20 @@ public class MainActivity extends FragmentActivity
 					});
                 }
             }
+			public void onStatus(final String message)
+			{
+				if (getActivity() != null)
+				{
+					getActivity().runOnUiThread(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							showUserInfo(message);
+						}
+					});
+				}
+			}
         };
 		private PhoneIdEventListener phoneIdEventListener = new PhoneIdEventListener();
     }

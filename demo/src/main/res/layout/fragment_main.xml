@@ -18,43 +18,55 @@
 
     </FrameLayout>
 
+	<fragment
+		android:id="@+id/phoneid_login_fragment"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_above="@+id/btnLoginAccountManager"
+		android:layout_marginBottom="20dp"
+		android:name="id.phone.sdk.ui.fragment.RootUIFragment"
+		tools:layout="@layout/phid_fragment_compact_ui" />
+
     <Button
 		android:id="@+id/btnLoginAccountManager"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_centerHorizontal="true"
-		android:layout_marginTop="60dp"
+		android:layout_above="@+id/btnPhoneIdLoginButtonStyled"
+		android:layout_marginBottom="20dp"
+        android:minEms="21"
 		android:text="@string/btn_login_with_account_manager"
+		/>
+
+	<id.phone.sdk.ui.view.LoginButton
+		android:id="@+id/btnPhoneIdLoginButtonStyled"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:minEms="21"
+		android:layout_above="@+id/btnPhoneIdLoginButton"
+		android:layout_centerHorizontal="true"
+		android:layout_marginBottom="20dp"
+		android:text ="Logout (styled)"
+		app:textLoggedOut="Login Phone.Id (styled)"
+		android:background="@drawable/login_btn_styled_bg"
+		android:textColor="@android:color/white"
+		android:gravity="center_vertical|left"
+		android:drawablePadding="10dp"
 		/>
 
     <id.phone.sdk.ui.view.LoginButton
         android:id="@+id/btnPhoneIdLoginButton"
-        android:layout_centerInParent="true"
+		android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
-
-    <id.phone.sdk.ui.view.LoginButton
-        android:id="@+id/btnPhoneIdLoginButtonStyled"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minEms="17"
-        android:layout_above="@+id/btnPhoneIdLoginButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:text ="Logout (styled)"
-        app:textLoggedOut="Login Phone.Id (styled)"
-        android:background="@drawable/login_btn_styled_bg"
-        android:textColor="@android:color/white"
-		android:gravity="center_vertical|left"
-		android:drawablePadding="10dp"
+		android:layout_above="@+id/txtUserInfo"
         />
 
     <TextView
         android:id="@+id/txtUserInfo"
-        android:layout_below="@id/btnPhoneIdLoginButton"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+		android:minHeight="80dp"
         android:layout_above="@+id/layoutButtons"
         android:layout_alignWithParentIfMissing="true"/>
 
