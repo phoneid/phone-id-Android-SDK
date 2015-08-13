@@ -55,6 +55,22 @@ to login/log-out from Phone.Id server. To use LoginButton add it tou your layout
         android:layout_height="wrap_content"
         />
 
+### Using Compact UI
+It is possible to inject Phone.Id Compact UI fragment into your UI layout. Compact UI has a size of
+the LoginButton, but does not open separate activity for login and does everything "in-place". Compact
+UI fragment may be used only inside Activity (no fragment nested into activity allowed).
+To insert Compact UI into your layout use the following snippet:
+
+	<fragment
+		android:id="@+id/phoneid_login_fragment"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:name="id.phone.sdk.ui.fragment.RootUIFragment"
+		tools:layout="@layout/phid_fragment_compact_ui" />
+
+Then just catch PhoneId updates as descibed below:
+
+
 ### Catching Phone.Id updates
 
 Phone.Id SDK generates updates through LocalBroadcastManager. To catch updates you should register
@@ -78,6 +94,11 @@ BroadcastReceiver in your activity/fragment class:
 				else if (PhoneId.ACTION_LOGGED_OUT.equals(intent.getAction()))
 				{
 					// Perform action on logged-out
+				}
+				else if (PhoneId.ACTION_STATUS.equals(intent.getAction()))
+				{
+					String message = intent.getStringExtra(PhoneId.ARG_TOKEN_TYPE)
+					// Display current login process stage/status in your UI
 				}
 				else if (PhoneId.ACTION_USER_PROFILE.equals(intent.getAction()))
 				{
