@@ -12,4 +12,5 @@
     <string name="msg_contacts_uploaded">Contacts uploaded</string>
     <string name="btn_upload_contacts">Send contacts</string>
     <string name="btn_uploading_contacts">Uploading&#8230;</string>
+    <string name="err_no_user_found">No user found:</string>
 </resources>

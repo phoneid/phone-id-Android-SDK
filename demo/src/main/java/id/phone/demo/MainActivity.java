@@ -1,16 +1,20 @@
 package id.phone.demo;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
 
@@ -26,6 +30,7 @@ import id.phone.sdk.ui.view.LoginButton;
 public class MainActivity extends FragmentActivity
 {
 	public static final String TAG = MainActivity.class.getSimpleName();
+	private static final int PICK_CONTACT_REQUEST = 122;
 
 	Button btnLoginAccountManager;
 	ViewGroup layoutButtons;
@@ -33,6 +38,7 @@ public class MainActivity extends FragmentActivity
 	Button btnShowUserInfo;
 	Button btnUploadContacts;
 	ViewGroup layoutContacts;
+	ImageButton btnPickContact;
 
 	private BroadcastReceiver phoneIdEventsReceiver = new BroadcastReceiver() {
 		@Override
@@ -81,6 +87,7 @@ public class MainActivity extends FragmentActivity
 		btnShowUserInfo = (Button)findViewById(R.id.btnShowUserInfo);
 		btnUploadContacts = (Button)findViewById(R.id.btnUploadContacts);
 		layoutContacts = (ViewGroup)findViewById(R.id.layoutContacts);
+		btnPickContact = (ImageButton)findViewById(R.id.btnPickContact);
 
 		btnLoginAccountManager.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -200,16 +207,47 @@ public class MainActivity extends FragmentActivity
 		LocalBroadcastManager.getInstance(this).unregisterReceiver(phoneIdEventsReceiver);
 	}
 
+	public void onPickContact(View view)
+	{
+		Intent pickContactIntent =
+			new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+		pickContactIntent.setType(ContactsContract.Contacts.CONTENT_TYPE);
+		startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
+	}
 
 	@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		if ( requestCode == PICK_CONTACT_REQUEST )
+		{
 
-        //ok we've got some data from the PhoneId SDK
-        if (resultCode == RESULT_OK && requestCode == LoginButton.LOGIN_REQUEST_CODE && data != null) {
+			if ( resultCode == Activity.RESULT_OK )
+			{
+				try
+				{
+					User user = User.getInstance(data.getData());
+
+					QuickContactBadge badge = user.createQuickContactBadge(this);
+					int margin = (int)getResources().getDimension(R.dimen.activity_horizontal_margin);
+					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+						ViewGroup.LayoutParams.WRAP_CONTENT);
+					params.setMargins(margin, margin, margin, margin);
+					layoutContacts.addView(badge, params);
+				}
+				catch (UserNotFoundException ex)
+				{
+					InfoDialog.newInstance(R.string.phid_error,
+						getString(R.string.err_no_user_found) + data.getData().toString())
+						.show(getSupportFragmentManager(), InfoDialog.TAG);
+				}
+			}
+		}
+		else  if (resultCode == RESULT_OK && requestCode == LoginButton.LOGIN_REQUEST_CODE && data != null)
+		{
 			showUserInfo(data.getStringExtra(Intent.EXTRA_TEXT));
-        }
-    }
+		}
+		else super.onActivityResult(requestCode, resultCode, data);
+	}
 
 	public void showUserInfo(String userInfo)
 	{
