@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,7 @@ import id.phone.sdk.rest.response.UserResponse;
 import id.phone.sdk.ui.view.LoginButton;
 
 
-public class MainActivity extends FragmentActivity
+public class MainActivity extends Activity
 {
 	public static final String TAG = MainActivity.class.getSimpleName();
 	private static final int PICK_CONTACT_REQUEST = 122;
@@ -89,25 +88,29 @@ public class MainActivity extends FragmentActivity
 		layoutContacts = (ViewGroup)findViewById(R.id.layoutContacts);
 		btnPickContact = (ImageButton)findViewById(R.id.btnPickContact);
 
-		btnLoginAccountManager.setOnClickListener(new View.OnClickListener() {
+		btnLoginAccountManager.setOnClickListener(new View.OnClickListener()
+		{
 			@Override
 			public void onClick(View v)
 			{
 				try
 				{
-					PhoneId.getInstance().getAccessToken(MainActivity.this, new PhoneId.TokenResponseCallback() {
-						@Override
-						public void tokenResponseDelivered(TokenResponse tokenResponse)
+					PhoneId.getInstance()
+						.getAccessToken(MainActivity.this, new PhoneId.TokenResponseCallback()
 						{
-							InfoDialog.newInstance(R.string.msg_access_token, tokenResponse.toString())
-								.show(getSupportFragmentManager(), InfoDialog.TAG);
-						}
-					});
+							@Override
+							public void tokenResponseDelivered(TokenResponse tokenResponse)
+							{
+								InfoDialog.newInstance(R.string.msg_access_token,
+									tokenResponse.toString())
+									.show(getFragmentManager(), InfoDialog.TAG);
+							}
+						});
 				}
 				catch (Exception ex)
 				{
 					InfoDialog.newInstance(R.string.phid_error, ex.getLocalizedMessage())
-						.show(MainActivity.this.getSupportFragmentManager(), InfoDialog.TAG);
+						.show(MainActivity.this.getFragmentManager(), InfoDialog.TAG);
 				}
 			}
 		});
@@ -120,7 +123,7 @@ public class MainActivity extends FragmentActivity
 		catch (Exception ex)
 		{
 			InfoDialog.newInstance(R.string.phid_error, ex.getLocalizedMessage())
-				.show(MainActivity.this.getSupportFragmentManager(), InfoDialog.TAG);
+				.show(MainActivity.this.getFragmentManager(), InfoDialog.TAG);
 		}
 
 		btnShowAccessToken.setOnClickListener(new View.OnClickListener()
@@ -131,21 +134,23 @@ public class MainActivity extends FragmentActivity
 				try
 				{
 					TokenResponse response;
-					if ((response = PhoneId.getInstance().getAccessToken(MainActivity.this, null)) != null)
+					if ((response =
+						PhoneId.getInstance().getAccessToken()) != null)
 					{
 						InfoDialog.newInstance(R.string.msg_access_token, response.toString())
-							.show(MainActivity.this.getSupportFragmentManager(), InfoDialog.TAG);
+							.show(MainActivity.this.getFragmentManager(), InfoDialog.TAG);
 					}
 				}
 				catch (Exception ex)
 				{
 					InfoDialog.newInstance(R.string.phid_error, ex.getLocalizedMessage())
-						.show(MainActivity.this.getSupportFragmentManager(), InfoDialog.TAG);
+						.show(MainActivity.this.getFragmentManager(), InfoDialog.TAG);
 				}
 			}
 		});
 
-		btnShowUserInfo.setOnClickListener(new View.OnClickListener() {
+		btnShowUserInfo.setOnClickListener(new View.OnClickListener()
+		{
 			@Override
 			public void onClick(View v)
 			{
@@ -155,18 +160,19 @@ public class MainActivity extends FragmentActivity
 					if ((response = PhoneId.getInstance().getUser()) != null)
 					{
 						InfoDialog.newInstance(R.string.msg_user_info, response.toString())
-							.show(MainActivity.this.getSupportFragmentManager(), InfoDialog.TAG);
+							.show(MainActivity.this.getFragmentManager(), InfoDialog.TAG);
 					}
 				}
 				catch (Exception ex)
 				{
 					InfoDialog.newInstance(R.string.phid_error, ex.getLocalizedMessage())
-						.show(MainActivity.this.getSupportFragmentManager(), InfoDialog.TAG);
+						.show(MainActivity.this.getFragmentManager(), InfoDialog.TAG);
 				}
 			}
 		});
 
-		btnUploadContacts.setOnClickListener(new View.OnClickListener() {
+		btnUploadContacts.setOnClickListener(new View.OnClickListener()
+		{
 			@Override
 			public void onClick(View v)
 			{
@@ -183,11 +189,10 @@ public class MainActivity extends FragmentActivity
 				catch (Exception ex)
 				{
 					InfoDialog.newInstance(R.string.phid_error, ex.getLocalizedMessage())
-						.show(MainActivity.this.getSupportFragmentManager(), InfoDialog.TAG);
+						.show(MainActivity.this.getFragmentManager(), InfoDialog.TAG);
 				}
 			}
 		});
-
 
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(PhoneId.ACTION_LOGGED_IN);
@@ -238,7 +243,7 @@ public class MainActivity extends FragmentActivity
 				{
 					InfoDialog.newInstance(R.string.phid_error,
 						getString(R.string.err_no_user_found) + data.getData().toString())
-						.show(getSupportFragmentManager(), InfoDialog.TAG);
+						.show(getFragmentManager(), InfoDialog.TAG);
 				}
 			}
 		}
@@ -269,7 +274,7 @@ public class MainActivity extends FragmentActivity
 		catch (UserNotFoundException ex)
 		{
 			InfoDialog.newInstance(R.string.msg_user_info, "No user found with phone: " + userPhoneNumber)
-				.show(MainActivity.this.getSupportFragmentManager(), InfoDialog.TAG);
+				.show(MainActivity.this.getFragmentManager(), InfoDialog.TAG);
 		}
 	}
 
@@ -324,7 +329,7 @@ public class MainActivity extends FragmentActivity
 					btnUploadContacts.setEnabled(true);
 					btnUploadContacts.setText(R.string.btn_upload_contacts);
 					InfoDialog.newInstance(R.string.msg_contacts_uploaded, response)
-						.show(MainActivity.this.getSupportFragmentManager(), InfoDialog.TAG);
+						.show(MainActivity.this.getFragmentManager(), InfoDialog.TAG);
 				}
 			});
 
@@ -339,7 +344,7 @@ public class MainActivity extends FragmentActivity
 				{
 					showUserInfo(kind + ": " + message);
 					InfoDialog.newInstance(R.string.phid_error, kind + ": " + message)
-						.show(MainActivity.this.getSupportFragmentManager(), InfoDialog.TAG);
+						.show(MainActivity.this.getFragmentManager(), InfoDialog.TAG);
 				}
 			});
 		}

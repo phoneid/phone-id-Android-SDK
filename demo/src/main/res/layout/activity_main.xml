@@ -35,8 +35,10 @@
 		android:layout_height="wrap_content"
 		android:layout_above="@+id/btnLoginAccountManager"
 		android:layout_marginBottom="20dp"
-		android:name="id.phone.sdk.ui.fragment.RootUIFragment"
-		tools:layout="@layout/phid_fragment_compact_ui" />
+		android:name="id.phone.sdk.ui.fragment.PhoneIdFragment"
+		tools:layout="@layout/phid_fragment_compact_ui"
+        app:uiType="compact"
+        app:uiState="phone"/>
 
     <Button
 		android:id="@+id/btnLoginAccountManager"
