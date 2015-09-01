@@ -216,7 +216,7 @@ public class MainActivity extends Activity
 	{
 		Intent pickContactIntent =
 			new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-		pickContactIntent.setType(ContactsContract.Contacts.CONTENT_TYPE);
+		pickContactIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
 		startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
 	}
 
