@@ -35,7 +35,7 @@
 		android:layout_height="wrap_content"
 		android:layout_above="@+id/btnLoginAccountManager"
 		android:layout_marginBottom="20dp"
-		android:name="id.phone.sdk.ui.fragment.PhoneIdFragment"
+		android:name="id.phone.sdk.PhoneIdFragment"
 		tools:layout="@layout/phid_fragment_compact_ui"
         app:uiType="compact"
         app:uiState="phone"/>
@@ -48,6 +48,7 @@
 		android:layout_above="@+id/btnPhoneIdLoginButtonStyled"
 		android:layout_marginBottom="20dp"
         android:minEms="21"
+        android:visibility="gone"
 		android:text="@string/btn_login_with_account_manager"
 		/>
 

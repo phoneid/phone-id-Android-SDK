@@ -22,7 +22,8 @@ import id.phone.sdk.PhoneId;
 import id.phone.sdk.social.User;
 import id.phone.sdk.social.UserNotFoundException;
 import id.phone.sdk.rest.response.TokenResponse;
-import id.phone.sdk.rest.response.UserResponse;
+import id.phone.sdk.rest.response.UserProfile;
+import id.phone.sdk.ui.activity.UserProfileActivity;
 import id.phone.sdk.ui.view.LoginButton;
 
 
@@ -54,8 +55,10 @@ public class MainActivity extends Activity
 				else if (PhoneId.ACTION_LOGGED_OUT.equals(intent.getAction()))
 					phoneIdEventListener.onLoggedOut();
 				else if (PhoneId.ACTION_USER_PROFILE.equals(intent.getAction()))
-					phoneIdEventListener.onUserProfile(
-						intent.getStringExtra(PhoneId.ARG_USER_PROFILE));
+				{
+					UserProfile userProfile = intent.getParcelableExtra(UserProfile.class.getName());
+					phoneIdEventListener.onUserProfile(userProfile);
+				}
 				else if (PhoneId.ACTION_CONTACTS_UPLOADED.equals(intent.getAction()))
 					phoneIdEventListener.onContactsUploaded(
 						intent.getStringExtra(PhoneId.ARG_RESPONSE));
@@ -156,12 +159,14 @@ public class MainActivity extends Activity
 			{
 				try
 				{
-					UserResponse response;
-					if ((response = PhoneId.getInstance().getUser()) != null)
+					/*UserProfile response;
+					if ((response = PhoneId.getInstance().getUserProfile()) != null)
 					{
 						InfoDialog.newInstance(R.string.msg_user_info, response.toString())
 							.show(MainActivity.this.getFragmentManager(), InfoDialog.TAG);
-					}
+					}*/
+					final Intent userProfileIntent = new Intent(MainActivity.this, UserProfileActivity.class);
+					MainActivity.this.startActivity(userProfileIntent);
 				}
 				catch (Exception ex)
 				{
@@ -307,14 +312,14 @@ public class MainActivity extends Activity
 			});
 		}
 
-		public void onUserProfile(final String jsonUserProfile)
+		public void onUserProfile(final UserProfile userProfile)
 		{
 			MainActivity.this.runOnUiThread(new Runnable()
 			{
 				@Override
 				public void run()
 				{
-					showUserInfo(jsonUserProfile);
+					showUserInfo(userProfile.toString());
 				}
 			});
 		}
