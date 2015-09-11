@@ -1,5 +1,5 @@
 
-# Phone.Id SDK
+# Phone.Id SDK (rev #34)
 
 ## Phone.Id SDK library 
 
@@ -65,7 +65,7 @@ To insert Compact UI into your layout use the following snippet:
 		android:id="@+id/phoneid_login_fragment"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:name="id.phone.sdk.ui.fragment.RootUIFragment"
+		android:name="id.phone.sdk.PhoneIdFragment"
 		tools:layout="@layout/phid_fragment_compact_ui" />
 
 Then just catch PhoneId updates as descibed below:
@@ -341,6 +341,13 @@ You can get user information from server API using
 		, @NonNull UserInstanceCreatedCallback callback)
 
 UserInstanceCreatedCallback callback will return a User instance or an error.
+
+#### User profile UI
+User profile UI provider by Phone.Id library. User can setup/edit his/her properties like name, avatar and birthday. User profile data stored on
+Phone.Id server and provided only for users's friends by social graph. To open User Profile UI activity use the following Intent:
+
+	final Intent userProfileIntent = new Intent(this, id.phone.sdk.ui.activity.UserProfileActivity.class);
+	startActivity(userProfileIntent);
 
 #### QuickContactBadge for your UI
 
