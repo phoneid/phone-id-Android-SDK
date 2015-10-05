@@ -31,8 +31,9 @@
 
 	<fragment
 		android:id="@+id/phoneid_login_fragment"
-		android:layout_width="match_parent"
+		android:layout_width="@dimen/phid_main_bg_width"
 		android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
 		android:layout_above="@+id/btnLoginAccountManager"
 		android:layout_marginBottom="20dp"
 		android:name="id.phone.sdk.PhoneIdFragment"
@@ -73,6 +74,7 @@
 		android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minEms="21"
 		android:layout_above="@+id/txtUserInfo"
         />
 

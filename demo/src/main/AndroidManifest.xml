@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="id.phone.demo.MainActivity"
-            android:label="@string/phid_app_name">
+            android:label="@string/phid_app_name"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

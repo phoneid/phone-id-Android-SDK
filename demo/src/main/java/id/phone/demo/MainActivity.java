@@ -76,8 +76,13 @@ public class MainActivity extends Activity
 		}
 	};
 
+	public MainActivity()
+	{
+		// Setup customer phone number if any available
+		// PhoneId.setCustomerPhoneNumber("+1800555123000");
+	}
 
-    @Override
+	@Override
     protected void onCreate(Bundle savedInstanceState)
 	{
         super.onCreate(savedInstanceState);
