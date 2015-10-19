@@ -80,6 +80,7 @@ public class MainActivity extends Activity
 	{
 		// Setup customer phone number if any available
 		// PhoneId.setCustomerPhoneNumber("+1800555123000");
+		// PhoneId.setThemeResId(R.style.Theme_PhoneIdAlternate);
 	}
 
 	@Override

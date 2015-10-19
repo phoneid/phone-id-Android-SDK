@@ -5,4 +5,27 @@
         <!-- Customize your theme here. -->
     </style>
 
+	<!-- Sample accent colors for alternate Phone.Id theme -->
+	<color name="tomato">#ffe85025</color>
+	<color name="tomato_dark">#ffbf360c</color>
+
+	<!-- Sample theme for changing Phone.Id controls accent colors  -->
+    <style name="Theme_PhoneIdAlternate" parent="@style/phid_Theme">
+
+		<!-- Make sure to replace action bar style if you change it -->
+        <item name="android:actionBarStyle">@style/Theme_PhoneIdActionBarAlternate</item>
+
+		<!--   color for highlighted texts on light background -->
+		<item name="android:textColorHighlight">@color/tomato</item>
+		<!--   panels background used panels with darker background -->
+		<item name="android:panelColorBackground">@color/tomato</item>
+
+    </style>
+
+	<!-- Sample theme for changing Phone.Id action bar accent colors  -->
+    <style name="Theme_PhoneIdActionBarAlternate" parent="@style/phid_ActionBar">
+		<!-- Action bar background color -->
+        <item name="android:background">@color/tomato</item>
+    </style>
+
 </resources>

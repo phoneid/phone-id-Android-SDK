@@ -68,7 +68,15 @@ To insert Compact UI into your layout use the following snippet:
 		android:name="id.phone.sdk.PhoneIdFragment"
 		tools:layout="@layout/phid_fragment_compact_ui" />
 
-Then just catch PhoneId updates as descibed below:
+You can change fragment width as:
+
+	<fragment
+		android:id="@+id/phoneid_login_fragment"
+		android:layout_width="350dp"
+
+For eaxmple. Fragment height is fixed.
+
+Then just catch PhoneId updates as described below:
 
 
 ### Catching Phone.Id updates
@@ -143,6 +151,17 @@ And do not forget to unregister your BroadcastReceiver:
 			if (getActivity() != null)
 				LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(phoneIdEventsReceiver);
 		}
+
+If you already have customer phone number and want phone.id to start from this number un UI, then pass
+it to PhoneId object like this:
+
+		public MainActivity()
+		{
+			// Setup customer phone number if any available
+			PhoneId.setCustomerPhoneNumber("+1800555123000");
+		}
+
+Make sure you made this call BEFORE UI initialized (before onCreate call for the login Activity).
 
 ### Using 'PhoneId.getInstance().getAccessToken(@Nullable Activity activity,
 @Nullable TokenResponseCallback tokenResponseCallback)
@@ -334,22 +353,27 @@ id.phone.sdk.social.User object provides handful information about one of your c
 
 	  public static User getInstance(String phoneNumber) throws UserNotFoundException
 
+Phone numbers are never transmitted to server in clear form - just as SHA-hashes. In case you hve user phone 
+number SHA-hash retrieved from server you can use it to get user profile information like this
+
+	  public static User getInstance(String phoneNumberSHAHash) throws UserNotFoundException
+
 User will be looked up in local contacts database. If nothing found, then UserNotFoundException thrown.
+User lookup function is highly optimized and takes minimal time.
+
 You can get user information from server API using
 
 	public static void getRemoteInstance(@NonNull String phoneNumber
 		, @NonNull UserInstanceCreatedCallback callback)
 
+	public static void getRemoteInstance(@NonNull String phoneNumberSHAHash
+		, @NonNull UserInstanceCreatedCallback callback)
+
 UserInstanceCreatedCallback callback will return a User instance or an error.
 
 #### User profile UI
-User profile UI provider by Phone.Id library. User can setup/edit his/her properties like name, avatar and birthday. User profile data stored on
-Phone.Id server and provided only for users's friends by social graph. To open User Profile UI activity use the following Intent:
 
-	final Intent userProfileIntent = new Intent(this, id.phone.sdk.ui.activity.UserProfileActivity.class);
-	startActivity(userProfileIntent);
-
-#### QuickContactBadge for your UI
+##### QuickContactBadge for your UI
 
 id.phone.sdk.social.User class instance may create and setup the QuickContactBadge view object for
  the selected user. Below is sample code:
@@ -371,4 +395,12 @@ id.phone.sdk.social.User class instance may create and setup the QuickContactBad
 				.show(getActivity().getSupportFragmentManager(), InfoDialog.TAG);
 		}
 	}
+
+#### Handy contacts lookup wrapper
+
+User profile UI provider by Phone.Id library. User can setup/edit his/her properties like name, avatar and birthday. User profile data stored on
+Phone.Id server and provided only for users's friends by social graph. To open User Profile UI activity use the following Intent:
+
+	final Intent userProfileIntent = new Intent(this, id.phone.sdk.ui.activity.UserProfileActivity.class);
+	startActivity(userProfileIntent);
 
