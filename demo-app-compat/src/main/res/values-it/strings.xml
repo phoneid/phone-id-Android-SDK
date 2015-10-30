@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">Phone.id Applicazione Demo</string>
+  <string name="no_number">Il numero non è disponibile!</string>
+  <string name="action_settings">Impostazioni</string>
+</resources>
