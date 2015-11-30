@@ -47,11 +47,10 @@ public class MainActivity extends Activity
 			if (intent != null)
 			{
 				if (PhoneId.ACTION_LOGGED_IN.equals(intent.getAction()))
-					phoneIdEventListener.onLoggedIn(
-						intent.getStringExtra(PhoneId.ARG_TOKEN_TYPE)
-						, intent.getStringExtra(PhoneId.ARG_ACCESS_TOKEN)
-						, intent.getStringExtra(PhoneId.ARG_REFRESH_TOKEN)
-					);
+				{
+					TokenResponse tokenResponse = intent.getParcelableExtra(TokenResponse.class.getName());
+					phoneIdEventListener.onLoggedIn(tokenResponse);
+				}
 				else if (PhoneId.ACTION_LOGGED_OUT.equals(intent.getAction()))
 					phoneIdEventListener.onLoggedOut();
 				else if (PhoneId.ACTION_USER_PROFILE.equals(intent.getAction()))
@@ -80,6 +79,7 @@ public class MainActivity extends Activity
 	{
 		// Setup customer phone number if any available
 		// PhoneId.setCustomerPhoneNumber("+1800555123000");
+		// Setup Phone.id UI color theme
 		// PhoneId.setThemeResId(R.style.Theme_PhoneIdAlternate);
 	}
 
@@ -165,14 +165,7 @@ public class MainActivity extends Activity
 			{
 				try
 				{
-					/*UserProfile response;
-					if ((response = PhoneId.getInstance().getUserProfile()) != null)
-					{
-						InfoDialog.newInstance(R.string.msg_user_info, response.toString())
-							.show(MainActivity.this.getFragmentManager(), InfoDialog.TAG);
-					}*/
-					final Intent userProfileIntent = new Intent(MainActivity.this, UserProfileActivity.class);
-					MainActivity.this.startActivity(userProfileIntent);
+					PhoneId.getInstance().startUserProfileActivity(MainActivity.this);
 				}
 				catch (Exception ex)
 				{
@@ -189,13 +182,9 @@ public class MainActivity extends Activity
 			{
 				try
 				{
-					try
-					{
-						PhoneId.getInstance().uploadContactsToServer();
-						btnUploadContacts.setText(R.string.btn_uploading_contacts);
-						btnUploadContacts.setEnabled(false);
-					}
-					catch (Exception ex) {}
+					PhoneId.getInstance().uploadContactsToServer();
+					btnUploadContacts.setText(R.string.btn_uploading_contacts);
+					btnUploadContacts.setEnabled(false);
 				}
 				catch (Exception ex)
 				{
@@ -234,7 +223,14 @@ public class MainActivity extends Activity
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
-		if ( requestCode == PICK_CONTACT_REQUEST )
+		if (requestCode == LoginButton.LOGIN_REQUEST_CODE && resultCode == RESULT_OK && data != null)
+		{
+			UserProfile userProfile = data.getParcelableExtra(UserProfile.class.getName());
+			TokenResponse tokenResponse = data.getParcelableExtra(TokenResponse.class.getName());
+
+			showUserInfo(userProfile.toString());
+		}
+		else if ( requestCode == PICK_CONTACT_REQUEST )
 		{
 
 			if ( resultCode == Activity.RESULT_OK )
@@ -257,10 +253,6 @@ public class MainActivity extends Activity
 						.show(getFragmentManager(), InfoDialog.TAG);
 				}
 			}
-		}
-		else  if (resultCode == RESULT_OK && requestCode == LoginButton.LOGIN_REQUEST_CODE && data != null)
-		{
-			showUserInfo(data.getStringExtra(Intent.EXTRA_TEXT));
 		}
 		else super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -291,7 +283,7 @@ public class MainActivity extends Activity
 
 	private class PhoneIdEventListener
 	{
-		public void onLoggedIn(String tokenType, String accessToken, String refreshToken)
+		public void onLoggedIn(TokenResponse tokenResponse)
 		{
 			MainActivity.this.runOnUiThread(new Runnable()
 			{

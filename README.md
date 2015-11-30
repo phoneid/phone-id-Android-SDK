@@ -17,7 +17,7 @@ Include Phone.id SDK into your project by adding dependency to your project buil
 
 	dependencies {
 		...
-    	compile 'id.phone:library:0.9.38-SNAPSHOT'
+    	compile 'id.phone:library:0.9.39-SNAPSHOT'
 		...
 	}
 
