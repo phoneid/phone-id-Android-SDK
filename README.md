@@ -1,5 +1,5 @@
 
-# Phone.id SDK (rev #37)
+# Phone.id SDK (rev #40)
 
 Phone.id SDK is handy android library for easy user login in your application by phone number. 
 Library provides easy-to-use API and UI which you may include into your application UI and customize
@@ -17,7 +17,7 @@ Include Phone.id SDK into your project by adding dependency to your project buil
 
 	dependencies {
 		...
-    	compile 'id.phone:library:0.9.39-SNAPSHOT'
+    	compile 'id.phone:library:0.9.40-SNAPSHOT'
 		...
 	}
 
