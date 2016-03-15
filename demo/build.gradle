@@ -32,5 +32,5 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'id.phone:library:0.9.41-SNAPSHOT'
+    compile 'id.phone:library:0.9.42-SNAPSHOT'
 }
